@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit {{this_pie.name}} - PyPie Derby</title>
+</head>
+
+<style>
+/* styles.css */
+
+/* Reset default browser styles */
+html, body, form, input, h1, p {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f8f0; /* Light green */
+    color: #333333;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #957dad; /* Purple */
+    color: #ffffff;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #ffffff;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+input[type="submit"] {
+    background-color: #957dad; /* Purple */
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="text"] {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+
+</style>
+
+
+
+
+
+<body>
+    <div class="container">
+        <form action="/dashboard">
+            <input type="submit" value="Dashboard">
+        </form>
+        <form action="/logout">
+            <input type="submit" value="Log Out">
+        </form>
+    </div>
+    <form action="/edit_pie/{{this_pie.id}}" method="post" class="container">
+        <h1>Edit {{this_pie.name}}</h1>
+        {% with messages = get_flashed_messages(category_filter=['add_pie']) %}     
+            {% if messages %}                            
+                {% for message in messages %}            
+                    <p>{{message}}</p>                   
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div>
+            <label for="name">Name of Pie: </label>
+            <input type="text" name="name" id="" value="{{this_pie.name}}">
+        </div>
+        <div>
+            <label for="filling">Filling: </label>
+            <input type="text" name="filling" value="{{this_pie.filling}}"> 
+        </div>
+        <div>
+            <label for="crust">Crust: </label>
+            <input type="text" name="crust" id="" value="{{this_pie.crust}}">
+        </div>
+        <input type="submit" name="" id="" value="Edit Pie">
+    </form>
+</body>
+</html>

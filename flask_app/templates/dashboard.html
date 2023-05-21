@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>PyPie Derby</title>
+</head>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #CBC3E3;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .nav-buttons form {
+    margin-right: 10px;
+  }
+  
+  .user-pies {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .user-pies h1 {
+    margin-top: 0;
+  }
+  
+  .user-pies table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .user-pies th,
+  .user-pies td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .user-pies th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+  
+  .user-pies tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .add-pie-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .add-pie-form h1 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .add-pie-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .add-pie-form input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .add-pie-form input[type="submit"] {
+    background-color: #CBC3E3;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .add-pie-form input[type="submit"]:hover {
+    background-color: #CBC3E3;
+  }
+  
+  </style>
+
+<body>
+    <div class="nav-buttons">
+        <form action="/pies">
+            <input type="submit" value="Pie Derby">
+        </form>
+        <form action="/logout">
+            <input type="submit" value="Log Out">
+        </form>
+    </div>
+    <div class="user-pies">
+        <h1>PyPies by {{this_user.first_name}}</h1>
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Actions</th>
+            </thead>
+            {% for pie in this_user_pies %}
+            <tr>
+                <td>{{ pie.name }}</td>
+                <td>
+                    <a href="/edit/{{ pie.id }}">edit</a>
+                    <a href="/delete/{{ pie.id }}">delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <form action="/add_pie" method="post" class="add-pie-form">
+        <h1>Add New PyPie</h1>
+        {% with messages = get_flashed_messages(category_filter=['add_pie']) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name">
+        </div>
+        <div>
+            <label for="filling">Filling:</label>
+            <input type="text" name="filling" id="filling">
+        </div>
+        <div>
+            <label for="crust">Crust:</label>
+            <input type="text" name="crust" id="crust">
+        </div>
+        <input type="submit" value="Add Pie">
+    </form>
+</body>
+</html>
